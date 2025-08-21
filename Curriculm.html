@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Currículum – Plantilla Rosa Minimalista</title>
+  
+  <!-- Tipografías modernas y legibles (puedes cambiarlas libremente) -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root{
+      --rosa:#f6c9d8;     /* color principal */
+      --rosa-strong:#ee9bb5; /* acentos */
+      --texto:#30323b;    /* texto principal */
+      --gris:#6b707a;     /* texto secundario */
+      --fondo:#ffffff;    /* fondo */
+    }
+
+    /* Layout tipo A4 imprimible */
+    html,body{ height:100%; }
+    body{
+      margin:0; background:#f3f4f6; color:var(--texto);
+      font-family:"Poppins", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    }
+
+    .page{
+      width: 210mm; /* A4 */
+      min-height: 297mm;
+      margin: 16px auto;
+      background: var(--fondo);
+      box-shadow: 0 10px 30px rgba(0,0,0,.08);
+      display: grid;
+      grid-template-columns: 32% 68%;
+      position: relative;
+    }
+
+    /* Barra lateral rosada */
+    .sidebar{
+      background: linear-gradient(180deg, var(--rosa) 0%, #fdf1f5 100%);
+      padding: 28mm 12mm 18mm; /* margen amplio para imagen */
+      position: relative;
+    }
+
+    /* Contenido principal */
+    .main{
+      padding: 22mm 20mm 18mm;
+    }
+
+    /* Foto de perfil circular ubicada en la parte alta izquierda */
+    .photo-wrap{
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: 28px;
+      width: 120px; height: 120px;
+      border-radius: 999px;
+      border: 6px solid #fff;
+      box-shadow: 0 6px 24px rgba(0,0,0,.12);
+      overflow: hidden;
+      background: #fff center/cover no-repeat;
+    }
+    .photo-wrap img{ width:100%; height:100%; object-fit: cover; display:block; }
+
+    /* Encabezado (nombre + rol) alineado a la derecha de la página */
+    .header{
+      margin-top: 8mm;
+      display: flex;
+      flex-direction: column;
+      gap: 4mm;
+    }
+    .name{
+      font-family: "Montserrat", sans-serif;
+      font-size: 28pt;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      line-height: 1.1;
+    }
+    .role{
+      font-weight: 700;
+      font-size: 11pt;
+      letter-spacing: 4px;
+      color: var(--rosa-strong);
+    }
+
+    /* Secciones */
+    .section{ margin-top: 12mm; }
+    .section-title{
+      font-weight: 700;
+      letter-spacing: 8px;
+      font-size: 10pt;
+      text-transform: uppercase;
+      color: var(--texto);
+      position: relative;
+      margin-bottom: 6mm;
+    }
+    .section-title::after{
+      content:""; display:block; height:3px; width: 42px;
+      background: var(--rosa-strong);
+      margin-top: 8px;
+    }
+
+    /* Listas y elementos de línea temporal */
+    .item{ margin-bottom: 6mm; }
+    .item h4{
+      margin:0 0 2mm; font-size: 11pt; font-weight: 700; color: var(--texto);
+    }
+    .item .meta{
+      font-size: 9pt; color: var(--gris);
+    }
+    .para{ margin: 2mm 0 0; line-height: 1.6; font-size: 10.2pt; color: var(--texto); }
+
+    /* Sidebar: bloques simples */
+    .sb-block{ margin-top: 18mm; }
+    .sb-title{
+      font-weight: 700; letter-spacing: 6px; font-size: 9.5pt; text-transform: uppercase;
+    }
+    .sb-title + .underline{ height:3px; width:38px; background: var(--rosa-strong); margin: 7px 0 10px; }
+    .sb-list{ list-style:none; padding:0; margin:0; }
+    .sb-list li{ margin: 8px 0; font-size: 10.2pt; color: var(--texto); }
+    .muted{ color: var(--gris); }
+
+    /* Etiquetas (chips) */
+    .tags{ display:flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+    .tag{
+      border: 1px solid #e6b1c1; padding: 6px 10px; border-radius: 999px; font-size: 9pt; color: #8b4d60;
+      background: #fff; backdrop-filter: blur(2px);
+    }
+
+    /* Footer sutil */
+    .footer{
+      position:absolute; bottom:10mm; right:20mm; font-size: 8.5pt; color: var(--gris);
+    }
+
+    /* Impresión */
+    @page{ size: A4; margin: 0; }
+    @media print{
+      body{ background: #fff; }
+      .page{ margin:0; box-shadow:none; }
+      a{ color: inherit; text-decoration: none; }
+    }
+
+    /* Responsive para pantallas chicas */
+    @media (max-width: 900px){
+      .page{ width:100%; min-height:auto; grid-template-columns: 1fr; }
+      .sidebar{ padding-top: 90px; }
+      .photo-wrap{ top: 12px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page" role="document">
+    <!-- Sidebar con imagen y datos de contacto -->
+    <aside class="sidebar" role="complementary">
+      <!-- Reemplaza la imagen (src) por tu foto; la posición está fijada para coincidir con el diseño -->
+      <div class="photo-wrap" aria-label="Foto de perfil">
+        <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=400" alt="Foto de perfil" />
+      </div>
+
+      <div class="sb-block" style="margin-top: 70px;">
+        <div class="sb-title">C O N T A C T O</div>
+        <div class="underline"></div>
+        <ul class="sb-list">
+          <li><a href="mailto:carla-cambranis1006@outlook.com">carla-cambranis1006@outlook.com</a></li>
+          <li><a href="tel:+529811144043">981-114-4043</a></li>
+          <li>Campeche</li>
+        </ul>
+      </div>
+
+      <div class="sb-block">
+        <div class="sb-title">S O B R E  M Í</div>
+        <div class="underline"></div>
+        <p class="para">
+          Certificación en Terapia Manual Ortopédica y Osteopatía y abordaje de las disfunciones temporomandibulares.
+        </p>
+        <ul class="sb-list">
+          <li class="muted">Fecha de nacimiento: 10/06/2003</li>
+          <li class="muted">Edad: 23</li>
+          <li class="muted">Nacionalidad: Mexicana</li>
+        </ul>
+      </div>
+
+      <div class="sb-block">
+        <div class="sb-title">I D I O M A S</div>
+        <div class="underline"></div>
+        <div class="tags">
+          <span class="tag">Español</span>
+          <span class="tag">Inglés</span>
+          <!-- Agrega más etiquetas si lo necesitas -->
+        </div>
+      </div>
+
+      <div class="sb-block">
+        <div class="sb-title">H E R R A M I E N T A S</div>
+        <div class="underline"></div>
+        <ul class="sb-list">
+          <li>Software de edición</li>
+          <li>Software de arquitectura</li>
+          <li>Edición fotográfica</li>
+          <li>Edición de vídeo</li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- Columna principal -->
+    <section class="main">
+      <header class="header">
+        <div class="name">Carla Can Cambranis</div>
+        <div class="role">F I S I O T E R A P E Ú T I C A</div>
+      </header>
+
+      <section class="section">
+        <h3 class="section-title">E X P E R I E N C I A</h3>
+        <article class="item">
+          <h4>Puesto o Rol Reciente</h4>
+          <div class="meta">2020 – Presente</div>
+          <p class="para">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi.</p>
+        </article>
+      </section>
+
+      <section class="section">
+        <h3 class="section-title">E V E N T O S</h3>
+        <article class="item">
+          <h4>Participaciones y competencias</h4>
+          <div class="meta">copa campeche 2024 · copa campeche 2025</div>
+          <p class="para">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi.</p>
+        </article>
+      </section>
+
+      <section class="section">
+        <h3 class="section-title">F O R M A C I Ó N</h3>
+        <article class="item">
+          <h4>Grado Universitario – Universidad Autónoma de Campeche</h4>
+          <div class="meta">2021 – 2026</div>
+        </article>
+        <article class="item">
+          <h4>Preparatoria – Lic. Ermilo Sandoval Campos</h4>
+          <div class="meta">2018 – 2020</div>
+        </article>
+        <article class="item">
+          <h4>Formación adicional</h4>
+          <div class="meta">2026 – Postgrado en Marketing · 2027 – Grado en Comunicación Social</div>
+          <div class="meta">Universidad de Marketing · Universidad de Comunicación</div>
+        </article>
+      </section>
+
+      <section class="section">
+        <h3 class="section-title">C E R T I F I C A C I O N E S</h3>
+        <article class="item">
+          <h4>Curso Terapia Manual Instrumentalizada 1: Pain Reliever and 3D Thumb</h4>
+          <div class="meta">29 y 30 de junio de 2024</div>
+        </article>
+        <article class="item">
+          <h4>Certificación en Terapia Manual Ortopédica y Osteopatía y abordaje de las disfunciones Temporomandibulares</h4>
+          <div class="meta">6 y 7 de abril de 2024</div>
+        </article>
+      </section>
+
+      <footer class="footer">
+        Plantilla HTML editable · Diseño rosa minimalista
+      </footer>
+    </section>
+  </main>
+
+  <!-- Guía rápida de edición (solo visible en código):
+    1) Cambia el color desde :root (--rosa, --rosa-strong).
+    2) Reemplaza la imagen en .photo-wrap img[src].
+    3) Cambia textos dentro de cada <section>.
+    4) Para imprimir en A4 usa Ctrl/Cmd+P (los márgenes ya están ajustados).
+  -->
+</body>
+</html>
