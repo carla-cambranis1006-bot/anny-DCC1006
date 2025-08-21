@@ -107,8 +107,9 @@
     /* Elementos decorativos splash */
     .splash {
       position: absolute;
-      background: var(--rosa);
-      opacity: 0.1;
+      background: radial-gradient(circle at center, var(--rosa-strong), var(--rosa-dark));
+      opacity: 0.3;
+      filter: blur(20px);
       animation: float 6s ease-in-out infinite;
     }
 
@@ -119,6 +120,7 @@
       right: -50px;
       border-radius: 60% 40% 30% 70%;
       animation-delay: 0s;
+      background: radial-gradient(circle, #ee9bb5, #d499b3);
     }
 
     .splash2 {
@@ -128,6 +130,7 @@
       left: -30px;
       border-radius: 40% 60% 70% 30%;
       animation-delay: 2s;
+      background: radial-gradient(circle, #ff80ab, #d499b3);
     }
 
     .splash3 {
@@ -137,6 +140,7 @@
       right: 100px;
       border-radius: 30% 70% 40% 60%;
       animation-delay: 4s;
+      background: radial-gradient(circle, #f06292, #ee9bb5);
     }
 
     @keyframes float {
@@ -264,8 +268,9 @@
     .name-container {
       display: flex;
       flex-wrap: wrap;
-      align-items: baseline;
-      gap: 0.5rem;
+      flex-direction: colum;
+      align-items: flex-start;
+      gap: 0.4rem;
       margin-bottom: 1rem;
     }
 
@@ -667,7 +672,7 @@
       <aside class="sidebar" role="complementary">
         <div class="photo-wrap" aria-label="Foto de perfil">
           <div class="photo-frame">
-            <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=400" alt="Foto de Carla Can Cambranis" />
+            <img src="../foto.jpg" alt="Foto de Carla Can Cambranis" />
           </div>
         </div>
 
@@ -687,7 +692,7 @@
             </li>
             <li>
               <i data-lucide="map-pin" class="icon"></i>
-              Campeche
+              Campeche, San Francisco de Campeche
             </li>
           </ul>
         </div>
@@ -707,7 +712,7 @@
             </li>
             <li>
               <i data-lucide="user-check" class="icon"></i>
-              <span class="muted">Edad: 23</span>
+              <span class="muted">Edad: 22</span>
             </li>
             <li>
               <i data-lucide="flag" class="icon"></i>
@@ -908,3 +913,4 @@
   </script>
 </body>
 </html>
+
