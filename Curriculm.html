@@ -3,271 +3,908 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Currículum – Plantilla Rosa Minimalista</title>
+  <title>Currículum – Carla Can Cambranis</title>
   
-  <!-- Tipografías modernas y legibles (puedes cambiarlas libremente) -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Tipografías modernas -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&family=Montserrat:wght@400;700&family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+  
+  <!-- Iconos de Lucide -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
   
   <style>
     :root{
-      --rosa:#f6c9d8;     /* color principal */
-      --rosa-strong:#ee9bb5; /* acentos */
-      --texto:#30323b;    /* texto principal */
-      --gris:#6b707a;     /* texto secundario */
-      --fondo:#ffffff;    /* fondo */
+      --rosa:#f6c9d8;
+      --rosa-strong:#ee9bb5;
+      --rosa-dark:#d499b3;
+      --texto:#30323b;
+      --gris:#6b707a;
+      --fondo:#ffffff;
+      --shadow: rgba(0,0,0,0.1);
     }
 
-    /* Layout tipo A4 imprimible */
-    html,body{ height:100%; }
+    * {
+      box-sizing: border-box;
+    }
+
+    html,body{ 
+      height:100%; 
+      margin: 0;
+      padding: 0;
+    }
+
     body{
-      margin:0; background:#f3f4f6; color:var(--texto);
-      font-family:"Poppins", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+      color: var(--texto);
+      font-family: "Poppins", system-ui, -apple-system, sans-serif;
+      overflow-x: hidden;
+      opacity: 0;
+      animation: fadeIn 1s ease-out forwards;
     }
 
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    /* Loader */
+    .loader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, var(--rosa) 0%, var(--rosa-strong) 100%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      animation: loaderOut 0.8s ease-in-out 2s forwards;
+    }
+
+    @keyframes loaderOut {
+      to {
+        opacity: 0;
+        visibility: hidden;
+      }
+    }
+
+    .loader-circle {
+      width: 60px;
+      height: 60px;
+      border: 4px solid rgba(255,255,255,0.3);
+      border-top: 4px solid white;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Contenedor principal */
     .page{
-      width: 210mm; /* A4 */
-      min-height: 297mm;
-      margin: 16px auto;
+      max-width: 1200px;
+      min-height: 100vh;
+      margin: 0 auto;
       background: var(--fondo);
-      box-shadow: 0 10px 30px rgba(0,0,0,.08);
-      display: grid;
-      grid-template-columns: 32% 68%;
+      box-shadow: 0 20px 60px var(--shadow);
       position: relative;
+      overflow: hidden;
+      animation: slideUp 1s ease-out 0.5s both;
     }
 
-    /* Barra lateral rosada */
+    @keyframes slideUp {
+      from {
+        transform: translateY(50px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    /* Elementos decorativos splash */
+    .splash {
+      position: absolute;
+      background: var(--rosa);
+      opacity: 0.1;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .splash1 {
+      width: 200px;
+      height: 200px;
+      top: -50px;
+      right: -50px;
+      border-radius: 60% 40% 30% 70%;
+      animation-delay: 0s;
+    }
+
+    .splash2 {
+      width: 150px;
+      height: 150px;
+      bottom: 100px;
+      left: -30px;
+      border-radius: 40% 60% 70% 30%;
+      animation-delay: 2s;
+    }
+
+    .splash3 {
+      width: 100px;
+      height: 100px;
+      top: 200px;
+      right: 100px;
+      border-radius: 30% 70% 40% 60%;
+      animation-delay: 4s;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(180deg); }
+    }
+
+    /* Layout responsive */
+    .container {
+      display: grid;
+      grid-template-columns: 350px 1fr;
+      min-height: 100vh;
+    }
+
+    /* Sidebar */
     .sidebar{
       background: linear-gradient(180deg, var(--rosa) 0%, #fdf1f5 100%);
-      padding: 28mm 12mm 18mm; /* margen amplio para imagen */
+      padding: 2rem;
       position: relative;
+      overflow: hidden;
+    }
+
+    .sidebar::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+      animation: pulse 4s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.3; }
+      50% { transform: scale(1.1); opacity: 0.1; }
+    }
+
+    /* Foto cuadrada con efectos */
+    .photo-wrap{
+      width: 140px;
+      height: 140px;
+      margin: 0 auto 2rem;
+      position: relative;
+      transform: rotate(-3deg);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      animation: photoIn 1.2s ease-out 1s both;
+    }
+
+    @keyframes photoIn {
+      from {
+        transform: rotate(-3deg) scale(0.8);
+        opacity: 0;
+      }
+      to {
+        transform: rotate(-3deg) scale(1);
+        opacity: 1;
+      }
+    }
+
+    .photo-wrap:hover {
+      transform: rotate(0deg) scale(1.05);
+    }
+
+    .photo-frame {
+      width: 100%;
+      height: 100%;
+      border-radius: 20px;
+      overflow: hidden;
+      border: 4px solid white;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+      position: relative;
+    }
+
+    .photo-frame::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.3) 50%, transparent 70%);
+      transform: translateX(-100%);
+      transition: transform 0.6s;
+    }
+
+    .photo-wrap:hover .photo-frame::before {
+      transform: translateX(100%);
+    }
+
+    .photo-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .photo-wrap:hover .photo-frame img {
+      transform: scale(1.1);
     }
 
     /* Contenido principal */
     .main{
-      padding: 22mm 20mm 18mm;
+      padding: 2rem;
+      position: relative;
     }
 
-    /* Foto de perfil circular ubicada en la parte alta izquierda */
-    .photo-wrap{
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-      top: 28px;
-      width: 120px; height: 120px;
-      border-radius: 999px;
-      border: 6px solid #fff;
-      box-shadow: 0 6px 24px rgba(0,0,0,.12);
-      overflow: hidden;
-      background: #fff center/cover no-repeat;
-    }
-    .photo-wrap img{ width:100%; height:100%; object-fit: cover; display:block; }
-
-    /* Encabezado (nombre + rol) alineado a la derecha de la página */
+    /* Header con nombres separados */
     .header{
-      margin-top: 8mm;
+      margin-bottom: 3rem;
+      animation: headerSlide 1s ease-out 1.5s both;
+    }
+
+    @keyframes headerSlide {
+      from {
+        transform: translateX(-30px);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    .name-container {
       display: flex;
-      flex-direction: column;
-      gap: 4mm;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
     }
-    .name{
+
+    .first-name {
+      font-family: "Dancing Script", cursive;
+      font-size: 3.5rem;
+      font-weight: 700;
+      color: var(--rosa-strong);
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+      animation: bounce 2s ease-in-out 2s;
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-10px); }
+      60% { transform: translateY(-5px); }
+    }
+
+    .last-name {
       font-family: "Montserrat", sans-serif;
-      font-size: 28pt;
+      font-size: 2.5rem;
       font-weight: 800;
-      letter-spacing: 1px;
       text-transform: uppercase;
-      line-height: 1.1;
+      letter-spacing: 2px;
+      color: var(--texto);
     }
+
     .role{
       font-weight: 700;
-      font-size: 11pt;
+      font-size: 1rem;
       letter-spacing: 4px;
+      color: var(--rosa-strong);
+      text-transform: uppercase;
+      position: relative;
+    }
+
+    .role::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 3px;
+      background: var(--rosa-strong);
+      animation: lineGrow 1s ease-out 2.5s forwards;
+    }
+
+    @keyframes lineGrow {
+      to { width: 100px; }
+    }
+
+    /* Secciones con animaciones */
+    .section{
+      margin: 2rem 0;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: sectionIn 0.8s ease-out forwards;
+    }
+
+    .section:nth-child(2) { animation-delay: 0.1s; }
+    .section:nth-child(3) { animation-delay: 0.2s; }
+    .section:nth-child(4) { animation-delay: 0.3s; }
+    .section:nth-child(5) { animation-delay: 0.4s; }
+
+    @keyframes sectionIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .section-title{
+      font-weight: 700;
+      letter-spacing: 4px;
+      font-size: 1rem;
+      text-transform: uppercase;
+      color: var(--texto);
+      margin-bottom: 1.5rem;
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .section-title::after{
+      content: "";
+      flex: 1;
+      height: 2px;
+      background: linear-gradient(90deg, var(--rosa-strong), transparent);
+    }
+
+    /* Items con hover effects */
+    .item{
+      margin-bottom: 1.5rem;
+      padding: 1.5rem;
+      border-radius: 15px;
+      background: rgba(255,255,255,0.5);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(246, 201, 216, 0.3);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(246, 201, 216, 0.1), transparent);
+      transition: left 0.5s;
+    }
+
+    .item:hover::before {
+      left: 100%;
+    }
+
+    .item:hover {
+      transform: translateY(-5px) scale(1.02);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+      border-color: var(--rosa-strong);
+    }
+
+    .item h4{
+      margin: 0 0 0.5rem;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--texto);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .item .meta{
+      font-size: 0.9rem;
+      color: var(--gris);
+      margin-bottom: 0.5rem;
+    }
+
+    .para{
+      margin: 0.5rem 0 0;
+      line-height: 1.6;
+      font-size: 0.95rem;
+      color: var(--texto);
+    }
+
+    /* Sidebar blocks */
+    .sb-block{
+      margin: 2rem 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .sb-title{
+      font-weight: 700;
+      letter-spacing: 3px;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .sb-list{
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .sb-list li{
+      margin: 0.8rem 0;
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.3s ease;
+      padding: 0.5rem;
+      border-radius: 10px;
+    }
+
+    .sb-list li:hover {
+      background: rgba(255,255,255,0.3);
+      transform: translateX(5px);
+    }
+
+    /* Tags */
+    .tags{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .tag{
+      border: 2px solid var(--rosa);
+      padding: 0.5rem 1rem;
+      border-radius: 25px;
+      font-size: 0.85rem;
+      color: var(--rosa-dark);
+      background: rgba(255,255,255,0.8);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .tag::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: var(--rosa);
+      transition: left 0.3s ease;
+      z-index: -1;
+    }
+
+    .tag:hover::before {
+      left: 0;
+    }
+
+    .tag:hover {
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+
+    /* Iconos */
+    .icon {
+      width: 1.2rem;
+      height: 1.2rem;
+      flex-shrink: 0;
+    }
+
+    /* Links con efectos */
+    a {
+      color: inherit;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    a:hover {
       color: var(--rosa-strong);
     }
 
-    /* Secciones */
-    .section{ margin-top: 12mm; }
-    .section-title{
-      font-weight: 700;
-      letter-spacing: 8px;
-      font-size: 10pt;
-      text-transform: uppercase;
-      color: var(--texto);
-      position: relative;
-      margin-bottom: 6mm;
-    }
-    .section-title::after{
-      content:""; display:block; height:3px; width: 42px;
-      background: var(--rosa-strong);
-      margin-top: 8px;
+    /* Responsive Design */
+    @media (max-width: 1024px) {
+      .container {
+        grid-template-columns: 300px 1fr;
+      }
+      
+      .first-name {
+        font-size: 3rem;
+      }
+      
+      .last-name {
+        font-size: 2rem;
+      }
     }
 
-    /* Listas y elementos de línea temporal */
-    .item{ margin-bottom: 6mm; }
-    .item h4{
-      margin:0 0 2mm; font-size: 11pt; font-weight: 700; color: var(--texto);
+    @media (max-width: 768px) {
+      .page {
+        margin: 0;
+        border-radius: 0;
+      }
+      
+      .container {
+        grid-template-columns: 1fr;
+      }
+      
+      .sidebar {
+        order: 2;
+        padding: 1.5rem;
+      }
+      
+      .main {
+        order: 1;
+        padding: 1.5rem;
+      }
+      
+      .photo-wrap {
+        width: 120px;
+        height: 120px;
+        margin: 0 auto 1.5rem;
+      }
+      
+      .name-container {
+        justify-content: center;
+        text-align: center;
+      }
+      
+      .first-name {
+        font-size: 2.5rem;
+      }
+      
+      .last-name {
+        font-size: 1.8rem;
+      }
+      
+      .role {
+        text-align: center;
+      }
+      
+      .sb-block {
+        margin: 1.5rem 0;
+      }
+      
+      .tags {
+        justify-content: center;
+      }
     }
-    .item .meta{
-      font-size: 9pt; color: var(--gris);
-    }
-    .para{ margin: 2mm 0 0; line-height: 1.6; font-size: 10.2pt; color: var(--texto); }
 
-    /* Sidebar: bloques simples */
-    .sb-block{ margin-top: 18mm; }
-    .sb-title{
-      font-weight: 700; letter-spacing: 6px; font-size: 9.5pt; text-transform: uppercase;
-    }
-    .sb-title + .underline{ height:3px; width:38px; background: var(--rosa-strong); margin: 7px 0 10px; }
-    .sb-list{ list-style:none; padding:0; margin:0; }
-    .sb-list li{ margin: 8px 0; font-size: 10.2pt; color: var(--texto); }
-    .muted{ color: var(--gris); }
-
-    /* Etiquetas (chips) */
-    .tags{ display:flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
-    .tag{
-      border: 1px solid #e6b1c1; padding: 6px 10px; border-radius: 999px; font-size: 9pt; color: #8b4d60;
-      background: #fff; backdrop-filter: blur(2px);
-    }
-
-    /* Footer sutil */
-    .footer{
-      position:absolute; bottom:10mm; right:20mm; font-size: 8.5pt; color: var(--gris);
-    }
-
-    /* Impresión */
-    @page{ size: A4; margin: 0; }
-    @media print{
-      body{ background: #fff; }
-      .page{ margin:0; box-shadow:none; }
-      a{ color: inherit; text-decoration: none; }
+    @media (max-width: 480px) {
+      .main, .sidebar {
+        padding: 1rem;
+      }
+      
+      .first-name {
+        font-size: 2rem;
+      }
+      
+      .last-name {
+        font-size: 1.5rem;
+      }
+      
+      .photo-wrap {
+        width: 100px;
+        height: 100px;
+      }
+      
+      .item {
+        padding: 1rem;
+      }
+      
+      .section-title {
+        font-size: 0.9rem;
+        letter-spacing: 2px;
+      }
     }
 
-    /* Responsive para pantallas chicas */
-    @media (max-width: 900px){
-      .page{ width:100%; min-height:auto; grid-template-columns: 1fr; }
-      .sidebar{ padding-top: 90px; }
-      .photo-wrap{ top: 12px; }
+    /* Efectos de scroll */
+    .scroll-reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .scroll-reveal.revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Print styles */
+    @media print {
+      body {
+        background: white;
+      }
+      
+      .page {
+        box-shadow: none;
+        max-width: none;
+      }
+      
+      .loader {
+        display: none;
+      }
+      
+      .splash, .splash1, .splash2, .splash3 {
+        display: none;
+      }
+      
+      .item:hover {
+        transform: none;
+        box-shadow: none;
+      }
     }
   </style>
 </head>
 <body>
+  <!-- Loader -->
+  <div class="loader">
+    <div class="loader-circle"></div>
+  </div>
+
   <main class="page" role="document">
-    <!-- Sidebar con imagen y datos de contacto -->
-    <aside class="sidebar" role="complementary">
-      <!-- Reemplaza la imagen (src) por tu foto; la posición está fijada para coincidir con el diseño -->
-      <div class="photo-wrap" aria-label="Foto de perfil">
-        <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=400" alt="Foto de perfil" />
-      </div>
-
-      <div class="sb-block" style="margin-top: 70px;">
-        <div class="sb-title">C O N T A C T O</div>
-        <div class="underline"></div>
-        <ul class="sb-list">
-          <li><a href="mailto:carla-cambranis1006@outlook.com">carla-cambranis1006@outlook.com</a></li>
-          <li><a href="tel:+529811144043">981-114-4043</a></li>
-          <li>Campeche</li>
-        </ul>
-      </div>
-
-      <div class="sb-block">
-        <div class="sb-title">S O B R E  M Í</div>
-        <div class="underline"></div>
-        <p class="para">
-          Certificación en Terapia Manual Ortopédica y Osteopatía y abordaje de las disfunciones temporomandibulares.
-        </p>
-        <ul class="sb-list">
-          <li class="muted">Fecha de nacimiento: 10/06/2003</li>
-          <li class="muted">Edad: 23</li>
-          <li class="muted">Nacionalidad: Mexicana</li>
-        </ul>
-      </div>
-
-      <div class="sb-block">
-        <div class="sb-title">I D I O M A S</div>
-        <div class="underline"></div>
-        <div class="tags">
-          <span class="tag">Español</span>
-          <span class="tag">Inglés</span>
-          <!-- Agrega más etiquetas si lo necesitas -->
+    <!-- Elementos decorativos splash -->
+    <div class="splash splash1"></div>
+    <div class="splash splash2"></div>
+    <div class="splash splash3"></div>
+    
+    <div class="container">
+      <!-- Sidebar -->
+      <aside class="sidebar" role="complementary">
+        <div class="photo-wrap" aria-label="Foto de perfil">
+          <div class="photo-frame">
+            <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=400" alt="Foto de Carla Can Cambranis" />
+          </div>
         </div>
-      </div>
 
-      <div class="sb-block">
-        <div class="sb-title">H E R R A M I E N T A S</div>
-        <div class="underline"></div>
-        <ul class="sb-list">
-          <li>Software de edición</li>
-          <li>Software de arquitectura</li>
-          <li>Edición fotográfica</li>
-          <li>Edición de vídeo</li>
-        </ul>
-      </div>
-    </aside>
+        <div class="sb-block">
+          <div class="sb-title">
+            <i data-lucide="contact" class="icon"></i>
+            C O N T A C T O
+          </div>
+          <ul class="sb-list">
+            <li>
+              <i data-lucide="mail" class="icon"></i>
+              <a href="mailto:carla-cambranis1006@outlook.com">carla-cambranis1006@outlook.com</a>
+            </li>
+            <li>
+              <i data-lucide="phone" class="icon"></i>
+              <a href="tel:+529811144043">981-114-4043</a>
+            </li>
+            <li>
+              <i data-lucide="map-pin" class="icon"></i>
+              Campeche
+            </li>
+          </ul>
+        </div>
 
-    <!-- Columna principal -->
-    <section class="main">
-      <header class="header">
-        <div class="name">Carla Can Cambranis</div>
-        <div class="role">F I S I O T E R A P E Ú T I C A</div>
-      </header>
+        <div class="sb-block">
+          <div class="sb-title">
+            <i data-lucide="user" class="icon"></i>
+            S O B R E  M Í
+          </div>
+          <p class="para">
+            Certificación en Terapia Manual Ortopédica y Osteopatía y abordaje de las disfunciones temporomandibulares.
+          </p>
+          <ul class="sb-list">
+            <li>
+              <i data-lucide="calendar" class="icon"></i>
+              <span class="muted">Fecha de nacimiento: 10/06/2003</span>
+            </li>
+            <li>
+              <i data-lucide="user-check" class="icon"></i>
+              <span class="muted">Edad: 23</span>
+            </li>
+            <li>
+              <i data-lucide="flag" class="icon"></i>
+              <span class="muted">Nacionalidad: Mexicana</span>
+            </li>
+          </ul>
+        </div>
 
-      <section class="section">
-        <h3 class="section-title">E X P E R I E N C I A</h3>
-        <article class="item">
-          <h4>Puesto o Rol Reciente</h4>
-          <div class="meta">2020 – Presente</div>
-          <p class="para">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi.</p>
-        </article>
+        <div class="sb-block">
+          <div class="sb-title">
+            <i data-lucide="languages" class="icon"></i>
+            I D I O M A S
+          </div>
+          <div class="tags">
+            <span class="tag">Español</span>
+            <span class="tag">Inglés</span>
+          </div>
+        </div>
+
+        <div class="sb-block">
+          <div class="sb-title">
+            <i data-lucide="wrench" class="icon"></i>
+            H E R R A M I E N T A S
+          </div>
+          <ul class="sb-list">
+            <li>
+              <i data-lucide="edit-3" class="icon"></i>
+              Software de edición
+            </li>
+            <li>
+              <i data-lucide="building" class="icon"></i>
+              Software de arquitectura
+            </li>
+            <li>
+              <i data-lucide="camera" class="icon"></i>
+              Edición fotográfica
+            </li>
+            <li>
+              <i data-lucide="video" class="icon"></i>
+              Edición de vídeo
+            </li>
+          </ul>
+        </div>
+      </aside>
+
+      <!-- Contenido principal -->
+      <section class="main">
+        <header class="header">
+          <div class="name-container">
+            <div class="first-name">Carla</div>
+            <div class="last-name">Can Cambranis</div>
+          </div>
+          <div class="role">F I S I O T E R A P E Ú T I C A</div>
+        </header>
+
+        <section class="section scroll-reveal">
+          <h3 class="section-title">
+            <i data-lucide="briefcase" class="icon"></i>
+            E X P E R I E N C I A
+          </h3>
+          <article class="item">
+            <h4>
+              <i data-lucide="star" class="icon"></i>
+              Puesto o Rol Reciente
+            </h4>
+            <div class="meta">2020 – Presente</div>
+            <p class="para">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi.</p>
+          </article>
+        </section>
+
+        <section class="section scroll-reveal">
+          <h3 class="section-title">
+            <i data-lucide="trophy" class="icon"></i>
+            E V E N T O S
+          </h3>
+          <article class="item">
+            <h4>
+              <i data-lucide="award" class="icon"></i>
+              Participaciones y competencias
+            </h4>
+            <div class="meta">copa campeche 2024 · copa campeche 2025</div>
+            <p class="para">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi.</p>
+          </article>
+        </section>
+
+        <section class="section scroll-reveal">
+          <h3 class="section-title">
+            <i data-lucide="graduation-cap" class="icon"></i>
+            F O R M A C I Ó N
+          </h3>
+          <article class="item">
+            <h4>
+              <i data-lucide="school" class="icon"></i>
+              Grado Universitario – Universidad Autónoma de Campeche
+            </h4>
+            <div class="meta">2021 – 2026</div>
+          </article>
+          <article class="item">
+            <h4>
+              <i data-lucide="book-open" class="icon"></i>
+              Preparatoria – Lic. Ermilo Sandoval Campos
+            </h4>
+            <div class="meta">2018 – 2020</div>
+          </article>
+          <article class="item">
+            <h4>
+              <i data-lucide="plus-circle" class="icon"></i>
+              Formación adicional
+            </h4>
+            <div class="meta">2026 – Postgrado en Marketing · 2027 – Grado en Comunicación Social</div>
+            <div class="meta">Universidad de Marketing · Universidad de Comunicación</div>
+          </article>
+        </section>
+
+        <section class="section scroll-reveal">
+          <h3 class="section-title">
+            <i data-lucide="certificate" class="icon"></i>
+            C E R T I F I C A C I O N E S
+          </h3>
+          <article class="item">
+            <h4>
+              <i data-lucide="check-circle" class="icon"></i>
+              Curso Terapia Manual Instrumentalizada 1: Pain Reliever and 3D Thumb
+            </h4>
+            <div class="meta">29 y 30 de junio de 2024</div>
+          </article>
+          <article class="item">
+            <h4>
+              <i data-lucide="shield-check" class="icon"></i>
+              Certificación en Terapia Manual Ortopédica y Osteopatía y abordaje de las disfunciones Temporomandibulares
+            </h4>
+            <div class="meta">6 y 7 de abril de 2024</div>
+          </article>
+        </section>
       </section>
-
-      <section class="section">
-        <h3 class="section-title">E V E N T O S</h3>
-        <article class="item">
-          <h4>Participaciones y competencias</h4>
-          <div class="meta">copa campeche 2024 · copa campeche 2025</div>
-          <p class="para">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi.</p>
-        </article>
-      </section>
-
-      <section class="section">
-        <h3 class="section-title">F O R M A C I Ó N</h3>
-        <article class="item">
-          <h4>Grado Universitario – Universidad Autónoma de Campeche</h4>
-          <div class="meta">2021 – 2026</div>
-        </article>
-        <article class="item">
-          <h4>Preparatoria – Lic. Ermilo Sandoval Campos</h4>
-          <div class="meta">2018 – 2020</div>
-        </article>
-        <article class="item">
-          <h4>Formación adicional</h4>
-          <div class="meta">2026 – Postgrado en Marketing · 2027 – Grado en Comunicación Social</div>
-          <div class="meta">Universidad de Marketing · Universidad de Comunicación</div>
-        </article>
-      </section>
-
-      <section class="section">
-        <h3 class="section-title">C E R T I F I C A C I O N E S</h3>
-        <article class="item">
-          <h4>Curso Terapia Manual Instrumentalizada 1: Pain Reliever and 3D Thumb</h4>
-          <div class="meta">29 y 30 de junio de 2024</div>
-        </article>
-        <article class="item">
-          <h4>Certificación en Terapia Manual Ortopédica y Osteopatía y abordaje de las disfunciones Temporomandibulares</h4>
-          <div class="meta">6 y 7 de abril de 2024</div>
-        </article>
-      </section>
-
-      <footer class="footer">
-        Plantilla HTML editable · Diseño rosa minimalista
-      </footer>
-    </section>
+    </div>
   </main>
 
-  <!-- Guía rápida de edición (solo visible en código):
-    1) Cambia el color desde :root (--rosa, --rosa-strong).
-    2) Reemplaza la imagen en .photo-wrap img[src].
-    3) Cambia textos dentro de cada <section>.
-    4) Para imprimir en A4 usa Ctrl/Cmd+P (los márgenes ya están ajustados).
-  -->
+  <script>
+    // Inicializar iconos de Lucide
+    document.addEventListener('DOMContentLoaded', function() {
+      lucide.createIcons();
+      
+      // Animación de scroll reveal
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('revealed');
+          }
+        });
+      }, observerOptions);
+
+      document.querySelectorAll('.scroll-reveal').forEach(el => {
+        observer.observe(el);
+      });
+
+      // Efecto de parallax suave en elementos splash
+      window.addEventListener('scroll', () => {
+        const scrolled = window.pageYOffset;
+        const parallax = document.querySelectorAll('.splash');
+        const speed = 0.5;
+
+        parallax.forEach(element => {
+          const yPos = -(scrolled * speed);
+          element.style.transform = `translateY(${yPos}px)`;
+        });
+      });
+
+      // Animación adicional para tags
+      document.querySelectorAll('.tag').forEach((tag, index) => {
+        tag.style.animationDelay = `${index * 0.1}s`;
+        tag.classList.add('tag-animate');
+      });
+    });
+
+    // CSS adicional para animación de tags
+    const style = document.createElement('style');
+    style.textContent = `
+      .tag-animate {
+        opacity: 0;
+        transform: translateY(20px);
+        animation: tagIn 0.6s ease-out forwards;
+      }
+      
+      @keyframes tagIn {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    `;
+    document.head.appendChild(style);
+  </script>
 </body>
 </html>
