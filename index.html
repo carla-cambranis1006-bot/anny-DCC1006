@@ -629,28 +629,193 @@
       transform: translateY(0);
     }
 
-    /* Print styles */
+    /* ===========================
+       Print styles (una sola hoja)
+       =========================== */
+    @page {
+      /* Cambia a 'Letter' si tu impresora/país lo prefiere */
+      size: A4 portrait;
+      margin: 10mm;
+    }
+    
     @media print {
-      body {
-        background: white;
+      /* Reset y limpieza para impresión */
+      *,
+      *::before,
+      *::after { 
+        animation: none !important;
+        transition: none !important;
+        box-shadow: none !important;
       }
-      
+    
+      html, body {
+        background: #fff !important;
+        color: #000 !important;
+        height: auto !important;
+        overflow: visible !important;
+      }
+    
+      /* Oculta elementos decorativos y el loader */
+      .loader,
+      .splash,
+      .splash1,
+      .splash2,
+      .splash3 { 
+        display: none !important; 
+      }
+    
+      /* Contenedor principal optimizado a una página */
       .page {
-        box-shadow: none;
-        max-width: none;
+        box-shadow: none !important;
+        background: #fff !important;
+        /* ancho útil dentro del margen @page (aprox 190mm) */
+        width: 190mm !important;
+        min-height: auto !important;
+        margin: 0 !important;
+        padding: 0 !important;
       }
-      
-      .loader {
-        display: none;
+    
+      /* Layout en dos columnas compacto para imprimir */
+      .container {
+        display: grid !important;
+        grid-template-columns: 70mm 1fr !important; /* barra lateral + contenido */
+        column-gap: 8mm !important;
+        row-gap: 0 !important;
+        min-height: auto !important;
       }
-      
-      .splash, .splash1, .splash2, .splash3 {
-        display: none;
+    
+      /* Quita fondos degradados que no imprimen bien */
+      .sidebar {
+        background: #f7f7f7 !important; /* gris muy claro */
+        padding: 8mm 6mm !important;
+        position: static !important;
+        overflow: visible !important;
       }
-      
-      .item:hover {
-        transform: none;
-        box-shadow: none;
+    
+      .main {
+        padding: 8mm 0 !important;
+        position: static !important;
+      }
+    
+      /* Tipografías y escala para que quepa en una hoja */
+      :root {
+        /* puedes subir o bajar este factor si te faltan/sobran mm */
+        --print-scale: 0.92;
+      }
+    
+      body { 
+        font-size: calc(14px * var(--print-scale)) !important; 
+        line-height: 1.25 !important;
+      }
+    
+      .first-name { 
+        font-size: calc(3.5rem * var(--print-scale)) !important; 
+        line-height: 1.1 !important;
+        text-shadow: none !important;
+      }
+      .last-name  { 
+        font-size: calc(2.5rem * var(--print-scale)) !important; 
+        line-height: 1.1 !important;
+      }
+      .role {
+        font-size: calc(1rem * var(--print-scale)) !important;
+        letter-spacing: 3px !important;
+      }
+    
+      .section { 
+        margin: 8mm 0 !important; 
+        opacity: 1 !important; 
+        transform: none !important; 
+      }
+      .section-title { 
+        margin-bottom: 4mm !important; 
+        font-size: calc(1rem * var(--print-scale)) !important;
+      }
+    
+      .item { 
+        margin-bottom: 4mm !important; 
+        padding: 4mm !important; 
+        border: 1px solid #ddd !important; 
+        background: #fff !important; 
+        backdrop-filter: none !important; 
+        cursor: default !important; 
+      }
+      .item h4 { 
+        font-size: calc(1.05rem * var(--print-scale)) !important; 
+        margin: 0 0 2mm !important;
+      }
+      .item .meta { 
+        font-size: calc(0.9rem * var(--print-scale)) !important; 
+        margin-bottom: 1.5mm !important; 
+      }
+      .para { 
+        font-size: calc(0.95rem * var(--print-scale)) !important; 
+        line-height: 1.35 !important;
+        margin: 0 !important;
+      }
+    
+      /* Sidebar bloques compactos */
+      .sb-block { margin: 6mm 0 !important; }
+      .sb-title  { 
+        font-size: calc(0.9rem * var(--print-scale)) !important; 
+        margin-bottom: 3mm !important; 
+      }
+      .sb-list li { 
+        padding: 0 !important; 
+        margin: 2mm 0 !important; 
+        background: none !important; 
+        transform: none !important; 
+      }
+      .tags { gap: 2mm !important; }
+      .tag { 
+        padding: 1.5mm 4mm !important; 
+        border-width: 1px !important; 
+        box-shadow: none !important; 
+      }
+    
+      /* Foto más compacta */
+      .photo-wrap { 
+        width: 38mm !important; 
+        height: 38mm !important; 
+        margin: 0 auto 6mm !important; 
+        transform: none !important; 
+      }
+      .photo-frame { border: 2px solid #fff !important; }
+      .photo-frame::before { display: none !important; }
+      .photo-frame img { object-fit: cover !important; }
+    
+      /* Iconos en impresión: mantén tamaño y color sólido */
+      .icon { width: 14px !important; height: 14px !important; }
+    
+      /* Links sin subrayado azul de impresora */
+      a { color: #000 !important; text-decoration: none !important; }
+    
+      /* Evita saltos raros: intenta mantener bloques juntos */
+      .header,
+      .sb-block,
+      .section,
+      .item { 
+        break-inside: avoid !important; 
+        page-break-inside: avoid !important; 
+      }
+      .section-title { break-after: avoid !important; }
+    
+      /* Quita efectos hover/scroll reveal */
+      .scroll-reveal { opacity: 1 !important; transform: none !important; }
+      .item:hover { transform: none !important; }
+    
+      /* Ajustes para que NO se divida en 2+ hojas:
+         escalado adicional según navegador */
+      /* Chrome/Edge */
+      .page { zoom: 0.92; } /* sube/baja 0.90–0.98 si no cabe */
+      /* Firefox (no soporta zoom): usa transform */
+      @-moz-document url-prefix() {
+        .page {
+          transform: scale(0.92);
+          transform-origin: top left;
+          /* compensa el scale para mantener ancho imprimible */
+          width: calc(190mm / 0.92);
+        }
       }
     }
   </style>
@@ -913,6 +1078,7 @@
   </script>
 </body>
 </html>
+
 
 
 
