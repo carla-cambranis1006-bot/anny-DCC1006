@@ -647,6 +647,14 @@
     transition: none !important;
     box-shadow: none !important;
     filter: none !important;
+      /* Ajuste de texto en la lista del sidebar */
+      .sb-list li, 
+      .sb-list li a, 
+      .sb-list li span {
+        font-size: 0.8rem !important;   /* reduce un poco */
+        word-break: break-all !important; /* fuerza salto si es muy largo */
+        overflow-wrap: anywhere !important;
+        }
   }
 
   html, body {
@@ -1066,6 +1074,7 @@
   </script>
 </body>
 </html>
+
 
 
 
