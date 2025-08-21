@@ -653,7 +653,31 @@
         color: #000 !important;
         height: auto !important;
         overflow: visible !important;
+        opacity: 1 !important;
+        visibility: visible !important;
       }
+
+        /* cualquier cosa que por defecto esté oculta o animada */
+  .page, .container, .sidebar, .main,
+  .scroll-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    visibility: visible !important;
+  }
+
+  /* asegura que las imágenes sí se pinten */
+  img { 
+    visibility: visible !important;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  /* mejora colores de impresión (opcional) */
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+
+  /* oculta totalmente el loader en impresión */
+  .loader { display: none !important; }
     
       /* Oculta elementos decorativos y el loader */
       .loader,
@@ -1078,6 +1102,7 @@
   </script>
 </body>
 </html>
+
 
 
 
