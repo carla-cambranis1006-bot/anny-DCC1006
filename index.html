@@ -628,220 +628,184 @@
       opacity: 1;
       transform: translateY(0);
     }
+/* ===========================
+   PRINT – A4/Letter, 1–N páginas
+   =========================== */
+@page {
+  /* Deja que el navegador escoja A4 o Letter según impresora */
+  size: auto;
+  /* Márgenes recomendados para currículum */
+  margin: 12mm;
+}
 
-    /* ===========================
-       Print styles (una sola hoja)
-       =========================== */
-    @page {
-      /* Cambia a 'Letter' si tu impresora/país lo prefiere */
-      size: A4 portrait;
-      margin: 10mm;
-    }
-    
-    @media print {
-      /* Reset y limpieza para impresión */
-      *,
-      *::before,
-      *::after { 
-        animation: none !important;
-        transition: none !important;
-        box-shadow: none !important;
-      }
-    
-      html, body {
-        background: #fff !important;
-        color: #000 !important;
-        height: auto !important;
-        overflow: visible !important;
-        opacity: 1 !important;
-        visibility: visible !important;
-      }
+@media print {
+  /* Reset básico para evitar sorpresas */
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    box-shadow: none !important;
+    filter: none !important;
+  }
 
-        /* cualquier cosa que por defecto esté oculta o animada */
-  .page, .container, .sidebar, .main,
-  .scroll-reveal {
+  html, body {
+    background: #fff !important;
+    color: #000 !important;
+    height: auto !important;
+    overflow: visible !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* Oculta decoraciones y loader */
+  .loader,
+  .splash, .splash1, .splash2, .splash3 {
+    display: none !important;
+  }
+
+  /* SIN ancho fijo para evitar “franjas” desperdiciadas */
+  .page {
+    box-shadow: none !important;
+    background: #fff !important;
+    width: auto !important;
+    max-width: none !important;
+    min-height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* ⚠️ IMPORTANTE:
+     En impresión NO usamos grid (paginación con grid es inestable).
+     Usamos un layout clásico con float para sidebar + margen para main.
+     Esto elimina huecos grandes y evita que las columnas "se volteen". */
+  .container {
+    display: block !important;
+  }
+
+  /* Ajusta ANCHOS reales de impresión */
+  :root {
+    --print-gap: 6mm;     /* espacio entre columnas */
+    --print-side: 64mm;   /* ancho sidebar (ajusta 60–70mm si necesitas) */
+    --print-scale: 0.96;  /* escala tipográfica fina */
+  }
+
+  .sidebar {
+    float: left !important;
+    width: var(--print-side) !important;
+    margin: 0 !important;
+    padding: 8mm 6mm !important;
+    background: #f7f7f7 !important; /* gris claro que sí imprime */
+    position: static !important;
+    overflow: visible !important;
+    /* Evita que se corte un bloque del sidebar a mitad de página */
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  .main {
+    /* Columna derecha ocupa el resto de la página */
+    margin-left: calc(var(--print-side) + var(--print-gap)) !important;
+    padding: 8mm 0 !important;
+    position: static !important;
+  }
+
+  /* Tipografías compactas para optimizar espacio */
+  body {
+    font-size: calc(14px * var(--print-scale)) !important;
+    line-height: 1.25 !important;
+  }
+  .first-name {
+    font-size: calc(3.2rem * var(--print-scale)) !important;
+    line-height: 1.1 !important;
+    text-shadow: none !important;
+  }
+  .last-name {
+    font-size: calc(2.3rem * var(--print-scale)) !important;
+    line-height: 1.1 !important;
+  }
+  .role {
+    font-size: calc(0.95rem * var(--print-scale)) !important;
+    letter-spacing: 3px !important;
+  }
+
+  /* Bloques/ítems compactos y sin efectos */
+  .section {
+    margin: 7mm 0 !important;
     opacity: 1 !important;
     transform: none !important;
-    visibility: visible !important;
+    /* Evita que un título quede al final de la hoja y el contenido en la siguiente */
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+  .section-title {
+    margin-bottom: 3.5mm !important;
+    font-size: calc(1rem * var(--print-scale)) !important;
+    break-after: avoid !important;
+  }
+  .item {
+    margin-bottom: 3.5mm !important;
+    padding: 3.5mm !important;
+    border: 1px solid #ddd !important;
+    background: #fff !important;
+    backdrop-filter: none !important;
+    cursor: default !important;
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+  .item h4 {
+    font-size: calc(1.02rem * var(--print-scale)) !important;
+    margin: 0 0 2mm !important;
+  }
+  .item .meta {
+    font-size: calc(0.9rem * var(--print-scale)) !important;
+    margin-bottom: 1.5mm !important;
+  }
+  .para {
+    font-size: calc(0.95rem * var(--print-scale)) !important;
+    line-height: 1.33 !important;
+    margin: 0 !important;
+    orphans: 2;
+    widows: 2;
   }
 
-  /* asegura que las imágenes sí se pinten */
-  img { 
-    visibility: visible !important;
-    break-inside: avoid;
-    page-break-inside: avoid;
+  /* Sidebar: listas/tags sin hover y sin saltos feos */
+  .sb-block { margin: 6mm 0 !important; break-inside: avoid !important; }
+  .sb-title { font-size: calc(0.9rem * var(--print-scale)) !important; margin-bottom: 3mm !important; }
+  .sb-list li {
+    padding: 0 !important; margin: 2mm 0 !important; background: none !important; transform: none !important;
+    break-inside: avoid !important;
+  }
+  .tags { gap: 2mm !important; }
+  .tag { padding: 1.5mm 4mm !important; border-width: 1px !important; box-shadow: none !important; }
+
+  /* Imagen nítida y estable */
+  .photo-wrap {
+    width: 38mm !important; height: 38mm !important;
+    margin: 0 auto 6mm !important; transform: none !important;
+    break-inside: avoid !important;
+  }
+  .photo-frame { border: 2px solid #fff !important; }
+  .photo-frame::before { display: none !important; }
+  .photo-frame img { object-fit: cover !important; visibility: visible !important; }
+
+  /* Iconos/links sobrios en impresión */
+  .icon { width: 14px !important; height: 14px !important; }
+  a { color: #000 !important; text-decoration: none !important; }
+
+  /* Reglas de salto de página por secciones:
+     – Evita cortes incómodos
+     – Si “Certificaciones” no cabe, que pase entera a la siguiente hoja */
+  /* El orden en tu HTML: 1) Experiencia 2) Eventos 3) Formación 4) Certificaciones */
+  .main .section:nth-of-type(4) {
+    break-before: page;       /* fuerza “Certificaciones” a nueva página si viene muy abajo */
   }
 
-  /* mejora colores de impresión (opcional) */
-  -webkit-print-color-adjust: exact;
-  print-color-adjust: exact;
-
-  /* oculta totalmente el loader en impresión */
-  .loader { display: none !important; }
-    
-      /* Oculta elementos decorativos y el loader */
-      .loader,
-      .splash,
-      .splash1,
-      .splash2,
-      .splash3 { 
-        display: none !important; 
-      }
-    
-      /* Contenedor principal optimizado a una página */
-      .page {
-        box-shadow: none !important;
-        background: #fff !important;
-        /* ancho útil dentro del margen @page (aprox 190mm) */
-        width: 190mm !important;
-        min-height: auto !important;
-        margin: 0 !important;
-        padding: 0 !important;
-      }
-    
-      /* Layout en dos columnas compacto para imprimir */
-      .container {
-        display: grid !important;
-        grid-template-columns: 70mm 1fr !important; /* barra lateral + contenido */
-        column-gap: 8mm !important;
-        row-gap: 0 !important;
-        min-height: auto !important;
-      }
-    
-      /* Quita fondos degradados que no imprimen bien */
-      .sidebar {
-        background: #f7f7f7 !important; /* gris muy claro */
-        padding: 8mm 6mm !important;
-        position: static !important;
-        overflow: visible !important;
-      }
-    
-      .main {
-        padding: 8mm 0 !important;
-        position: static !important;
-      }
-    
-      /* Tipografías y escala para que quepa en una hoja */
-      :root {
-        /* puedes subir o bajar este factor si te faltan/sobran mm */
-        --print-scale: 0.92;
-      }
-    
-      body { 
-        font-size: calc(14px * var(--print-scale)) !important; 
-        line-height: 1.25 !important;
-      }
-    
-      .first-name { 
-        font-size: calc(3.5rem * var(--print-scale)) !important; 
-        line-height: 1.1 !important;
-        text-shadow: none !important;
-      }
-      .last-name  { 
-        font-size: calc(2.5rem * var(--print-scale)) !important; 
-        line-height: 1.1 !important;
-      }
-      .role {
-        font-size: calc(1rem * var(--print-scale)) !important;
-        letter-spacing: 3px !important;
-      }
-    
-      .section { 
-        margin: 8mm 0 !important; 
-        opacity: 1 !important; 
-        transform: none !important; 
-      }
-      .section-title { 
-        margin-bottom: 4mm !important; 
-        font-size: calc(1rem * var(--print-scale)) !important;
-      }
-    
-      .item { 
-        margin-bottom: 4mm !important; 
-        padding: 4mm !important; 
-        border: 1px solid #ddd !important; 
-        background: #fff !important; 
-        backdrop-filter: none !important; 
-        cursor: default !important; 
-      }
-      .item h4 { 
-        font-size: calc(1.05rem * var(--print-scale)) !important; 
-        margin: 0 0 2mm !important;
-      }
-      .item .meta { 
-        font-size: calc(0.9rem * var(--print-scale)) !important; 
-        margin-bottom: 1.5mm !important; 
-      }
-      .para { 
-        font-size: calc(0.95rem * var(--print-scale)) !important; 
-        line-height: 1.35 !important;
-        margin: 0 !important;
-      }
-    
-      /* Sidebar bloques compactos */
-      .sb-block { margin: 6mm 0 !important; }
-      .sb-title  { 
-        font-size: calc(0.9rem * var(--print-scale)) !important; 
-        margin-bottom: 3mm !important; 
-      }
-      .sb-list li { 
-        padding: 0 !important; 
-        margin: 2mm 0 !important; 
-        background: none !important; 
-        transform: none !important; 
-      }
-      .tags { gap: 2mm !important; }
-      .tag { 
-        padding: 1.5mm 4mm !important; 
-        border-width: 1px !important; 
-        box-shadow: none !important; 
-      }
-    
-      /* Foto más compacta */
-      .photo-wrap { 
-        width: 38mm !important; 
-        height: 38mm !important; 
-        margin: 0 auto 6mm !important; 
-        transform: none !important; 
-      }
-      .photo-frame { border: 2px solid #fff !important; }
-      .photo-frame::before { display: none !important; }
-      .photo-frame img { object-fit: cover !important; }
-    
-      /* Iconos en impresión: mantén tamaño y color sólido */
-      .icon { width: 14px !important; height: 14px !important; }
-    
-      /* Links sin subrayado azul de impresora */
-      a { color: #000 !important; text-decoration: none !important; }
-    
-      /* Evita saltos raros: intenta mantener bloques juntos */
-      .header,
-      .sb-block,
-      .section,
-      .item { 
-        break-inside: avoid !important; 
-        page-break-inside: avoid !important; 
-      }
-      .section-title { break-after: avoid !important; }
-    
-      /* Quita efectos hover/scroll reveal */
-      .scroll-reveal { opacity: 1 !important; transform: none !important; }
-      .item:hover { transform: none !important; }
-    
-      /* Ajustes para que NO se divida en 2+ hojas:
-         escalado adicional según navegador */
-      /* Chrome/Edge */
-      .page { zoom: 0.92; } /* sube/baja 0.90–0.98 si no cabe */
-      /* Firefox (no soporta zoom): usa transform */
-      @-moz-document url-prefix() {
-        .page {
-          transform: scale(0.92);
-          transform-origin: top left;
-          /* compensa el scale para mantener ancho imprimible */
-          width: calc(190mm / 0.92);
-        }
-      }
-    }
+  /* NO usar zoom/transform en impresión (causa gaps o columnas volteadas) */
+  /* .page { zoom: 0.92; }  <-- asegurarnos de NO usarlo */
+}
   </style>
 </head>
 <body>
@@ -1102,6 +1066,7 @@
   </script>
 </body>
 </html>
+
 
 
 
